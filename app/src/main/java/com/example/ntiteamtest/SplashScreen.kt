@@ -3,6 +3,7 @@ package com.example.ntiteamtest
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
+import android.os.PersistableBundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.Image
@@ -24,26 +25,34 @@ import com.airbnb.lottie.compose.LottieCompositionSpec
 import com.airbnb.lottie.compose.animateLottieCompositionAsState
 import com.airbnb.lottie.compose.rememberLottieComposition
 import com.example.ntiteamtest.ui.navigation.NavRoutes
+import com.example.ntiteamtest.ui.navigation.Navigator
 import com.example.ntiteamtest.ui.theme.NtiTeamTestTheme
 import dagger.hilt.android.components.ActivityComponent
 
-@Composable
-fun SplashScreen(
-    navigator: NavHostController
-) {
-    Box(modifier = Modifier.fillMaxSize().background(MaterialTheme.colorScheme.primary)) {
-        val composition by rememberLottieComposition(LottieCompositionSpec.RawRes(R.raw.splash))
-        val progress = animateLottieCompositionAsState(composition)
+@SuppressLint("CustomSplashScreen")
+class SplashScreen: ComponentActivity(){
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContent {
+            NtiTeamTestTheme {
+                Box(modifier = Modifier
+                        .fillMaxSize()
+                        .background(MaterialTheme.colorScheme.primary)
+                ) {
+                    val composition by rememberLottieComposition(LottieCompositionSpec.RawRes(R.raw.splash))
+                    val progress = animateLottieCompositionAsState(composition)
 
-        LottieAnimation(
-            composition = composition,
-            progress = { progress.progress },
-            alignment = Alignment.Center,
-        )
+                    LottieAnimation(
+                        composition = composition,
+                        progress = { progress.progress },
+                        alignment = Alignment.Center,
+                    )
 
-        if(progress.isAtEnd && progress.isPlaying) {
-            navigator.popBackStack()
-            navigator.navigate(NavRoutes.CatalogScreen.route)
+                    if(progress.isAtEnd && progress.isPlaying) {
+                        startActivity(Intent(this@SplashScreen, MainActivity::class.java))
+                    }
+                }
+            }
         }
     }
 }

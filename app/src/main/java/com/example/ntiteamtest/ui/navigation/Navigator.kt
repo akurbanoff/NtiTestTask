@@ -39,18 +39,7 @@ fun Navigator() {
     var isSearchPush by remember { mutableStateOf(false) }
     var isCartPush by remember { mutableStateOf(false) }
 
-    NavHost(navController = navigator, startDestination = NavRoutes.SplashScreen.route){
-        composable(
-            route = NavRoutes.SplashScreen.route,
-            exitTransition = {
-                slideOutHorizontally (
-                    targetOffsetX = { it },
-                    animationSpec = tween(durationMillis = 500, delayMillis = 100)
-                )
-            }
-        ){
-            SplashScreen(navigator = navigator)
-        }
+    NavHost(navController = navigator, startDestination = NavRoutes.CatalogScreen.route){
         composable(
             route = NavRoutes.CatalogScreen.route,
             enterTransition = {

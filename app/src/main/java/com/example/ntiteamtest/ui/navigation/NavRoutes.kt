@@ -1,7 +1,6 @@
 package com.example.ntiteamtest.ui.navigation
 
 sealed class NavRoutes(val route: String) {
-    object SplashScreen: NavRoutes("splash")
     object CatalogScreen: NavRoutes("catalog")
     object ProductDetailScreen: NavRoutes("product")
     object CartScreen: NavRoutes("cart")
